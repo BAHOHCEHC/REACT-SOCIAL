@@ -1,0 +1,5 @@
+{
+  "editor.tabCompletion": "on",
+  "prisma.scriptRunner": "yarn",
+  "prisma.pinToPrisma6": true
+}
