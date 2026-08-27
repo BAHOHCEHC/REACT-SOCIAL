@@ -1,5 +1,6 @@
-const router = require("express").Router();
-const multer = require("multer");
+const router = require('express').Router();
+const multer = require('multer');
+const UserController  = require('../controllers');
 
 //show where files will be stored and how they will be named
 const storage = multer.diskStorage({
@@ -15,8 +16,10 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-router.get("/register", (req, res) => {
-  res.json({ message: 'Welcome to the API' });
-});
+router.post('/register', UserController.register);
+router.post('/login', UserController.login);
+router.get('/current', UserController.currentUser);
+router.get('/users/:id', UserController.getUserById);
+router.put('/users/:id', UserController.updateUser);
 
 module.exports = router;
