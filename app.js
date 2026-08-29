@@ -4,6 +4,8 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const fs = require('fs');
+require('dotenv').config();
+
 const app = express();
 
 // view engine setup
