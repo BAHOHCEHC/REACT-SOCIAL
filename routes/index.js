@@ -41,8 +41,8 @@ router.post("/posts/:postId/like", authMiddleware, LikeController.toggleLike);
 router.get("/posts/:postId/likes", authMiddleware, LikeController.getLikesByPost);
 
 // comment routes
-router.post("/posts/:postId/comments", authMiddleware, CommentController.createComment);
-router.get("/posts/:postId/comments", authMiddleware, CommentController.getCommentsByPost);
+router.post("/comments", authMiddleware, CommentController.createComment);
+router.get("/comments", authMiddleware, CommentController.getCommentsByPost);
 router.delete("/comments/:id", authMiddleware, CommentController.deleteComment);
 
 // follow routes

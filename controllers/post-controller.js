@@ -48,7 +48,12 @@ const PostController = {
         },
       });
 
-      return res.status(200).json(posts);
+      const postsWithLikeStatus = posts.map((post) => ({
+        ...post,
+        isLiked: post.likes.some((like) => like.userId === req.user.id),
+      }));
+
+      return res.status(200).json(postsWithLikeStatus);
     } catch (error) {
       console.error(error);
       return res.status(500).json({
@@ -89,7 +94,9 @@ const PostController = {
         return res.status(404).json({ error: "Post not found" });
       }
 
-      return res.status(200).json(post);
+      const isLiked = post.likes.some((like) => like.userId === req.user.id);
+
+      return res.status(200).json({ ...post, isLiked });
     } catch (error) {
       console.error(error);
       return res.status(500).json({
