@@ -42,7 +42,6 @@ router.get("/posts/:postId/likes", authMiddleware, LikeController.getLikesByPost
 
 // comment routes
 router.post("/comments", authMiddleware, CommentController.createComment);
-router.get("/comments", authMiddleware, CommentController.getCommentsByPost);
 router.delete("/comments/:id", authMiddleware, CommentController.deleteComment);
 
 // follow routes
