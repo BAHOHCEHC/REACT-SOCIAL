@@ -2,8 +2,8 @@ const prisma = require('../prisma/prisma-client');
 
 const CommentController = {
   createComment: async (req, res) => {
-    const { postId } = req.params;
-    const { content } = req.body;
+    const { content, postId } = req.body;
+    const userId = req.user.id;
 
     if (!content || !content.trim()) {
       return res.status(400).json({ error: 'Comment content is required' });
@@ -18,9 +18,9 @@ const CommentController = {
 
       const comment = await prisma.comment.create({
         data: {
-          content,
-          userId: req.user.id,
           postId,
+          userId: req.user.id,
+          content
         },
         include: {
           user: true,

@@ -37,8 +37,8 @@ router.get("/posts/:id", authMiddleware, PostController.getPostById);
 router.delete("/posts/:id", authMiddleware, PostController.deletePost);
 
 // like routes
-router.post("/posts/:postId/like", authMiddleware, LikeController.toggleLike);
-router.get("/posts/:postId/likes", authMiddleware, LikeController.getLikesByPost);
+router.post("/like/:postId", authMiddleware, LikeController.likePost);
+router.delete("/like/:postId", authMiddleware, LikeController.unlikePost);
 
 // comment routes
 router.post("/comments", authMiddleware, CommentController.createComment);
