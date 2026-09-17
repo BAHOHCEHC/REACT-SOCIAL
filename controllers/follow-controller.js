@@ -2,24 +2,29 @@ const prisma = require('../prisma/prisma-client');
 
 const FollowController = {
   followUser: async (req, res) => {
-    const { id } = req.params;
-    const followerId = req.user.id;
+    const { followingId } = req.body;
+    const userId = req.user.id;
 
-    if (followerId === id) {
+    if (followingId === userId) {
       return res.status(400).json({ error: 'You cannot follow yourself' });
     }
 
     try {
-      const targetUser = await prisma.user.findUnique({ where: { id } });
+      console.log('TARGET:', followingId);
+      console.log('WHO:', userId);
+      const targetUser = await prisma.user.findUnique({
+        where: { id: followingId },
+      });
 
       if (!targetUser) {
+        console.log('TARGET USER NOT FOUND', targetUser);
         return res.status(404).json({ error: 'User not found' });
       }
 
       const existingFollow = await prisma.follows.findFirst({
         where: {
-          followerId,
-          followingId: id,
+          followingId: followingId,
+          followerId: userId,
         },
       });
 
@@ -29,12 +34,14 @@ const FollowController = {
 
       const follow = await prisma.follows.create({
         data: {
-          followerId,
-          followingId: id,
+          followingId,
+          followerId: userId,
         },
       });
 
-      return res.status(201).json(follow);
+      return res.status(201).json(follow, {
+        message: 'Successfully followed the user',
+      });
     } catch (error) {
       console.error(error);
       return res.status(500).json({
@@ -45,14 +52,14 @@ const FollowController = {
   },
 
   unfollowUser: async (req, res) => {
-    const { id } = req.params;
-    const followerId = req.user.id;
+    const { followingId } = req.body;
+    const userId = req.user.id;
 
     try {
       const follow = await prisma.follows.findFirst({
         where: {
-          followerId,
-          followingId: id,
+          followerId: userId,
+          followingId: followingId,
         },
       });
 
