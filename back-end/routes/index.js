@@ -47,7 +47,7 @@ router.delete("/comments/:id", authMiddleware, CommentController.deleteComment);
 // follow routes
 router.post("/follow", authMiddleware, FollowController.followUser);
 router.delete("/unfollow", authMiddleware, FollowController.unfollowUser);
-router.get("/users/:id/followers", authMiddleware, FollowController.getFollowers);
-router.get("/users/:id/following", authMiddleware, FollowController.getFollowing);
+// router.get("/users/:id/followers", authMiddleware, FollowController.getFollowers);
+// router.get("/users/:id/following", authMiddleware, FollowController.getFollowing);
 
 module.exports = router;
