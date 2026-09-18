@@ -1,0 +1,20 @@
+services:
+  express-app:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      DATABASE_URL: mongodb://admin:admin@db:27017/react_social?authSource=admin&directConnection=true
+      JWT_SECRET: ${JWT_SECRET}
+  db:
+    image: prismagraphql/mongo-single-replica:5.0.3
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
